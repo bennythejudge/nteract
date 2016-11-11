@@ -13,7 +13,7 @@ export const LOAD = 'LOAD';
 export const SET_NOTEBOOK = 'SET_NOTEBOOK';
 export const NEW_NOTEBOOK = 'NEW_NOTEBOOK';
 
-export const load = (filename) => ({ type: LOAD, filename });
+export const load = (filename, sessionId) => ({ type: LOAD, filename, sessionId});
 
 export const newNotebook = (kernelSpecName, cwd) => ({
   type: NEW_NOTEBOOK,
@@ -28,13 +28,13 @@ export const notebookLoaded = (filename, notebook) => ({
   notebook,
 });
 
-export const extractNewKernel = (filename, notebook) => {
+export const extractNewKernel = (filename, notebook, sessionId) => {
   const cwd = (filename && path.dirname(path.resolve(filename))) || process.cwd();
   const kernelName = notebook.getIn(
     ['metadata', 'kernelspec', 'name'], notebook.getIn(
       ['metadata', 'language_info', 'name'],
         'python3'));
-  return newKernel(kernelName, cwd);
+  return newKernel(kernelName, cwd, sessionId);
 };
 
 export const convertRawNotebook = (filename, data) => ({
@@ -57,7 +57,7 @@ export const loadEpic = actions =>
         .flatMap(({ filename, notebook }) =>
           Observable.of(
             notebookLoaded(filename, notebook),
-            extractNewKernel(filename, notebook),
+            extractNewKernel(filename, notebook, action.sessionId),
           )
         )
         .catch((err) =>
