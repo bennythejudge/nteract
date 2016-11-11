@@ -266,6 +266,7 @@ describe('menu', () => {
       type: constants.LAUNCH_KERNEL,
       kernelSpecName: 'python2',
       cwd: process.cwd(),
+      sessionId: 'sessionId',
     });
   });
 
@@ -304,6 +305,7 @@ describe('menu', () => {
     expect(store.dispatch.firstCall).to.be.calledWith({
       type: 'LOAD',
       filename: 'test-ipynb.ipynb',
+      sessionId: 'sessionId',
     });
   });
 
