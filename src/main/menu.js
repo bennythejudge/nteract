@@ -448,7 +448,7 @@ export const view = {
     },
 
     {
-      label: 'Editor options',
+      label: 'Editor Options',
       submenu: blink_menu,
     },
   ],
