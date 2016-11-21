@@ -40,6 +40,7 @@ import {
   setCursorBlink,
   save,
   saveAs,
+  setConfigKey,
 } from './actions';
 
 import {
@@ -310,6 +311,23 @@ export function dispatchNewNotebook(store, event, kernelSpecName) {
 
 export function dispatchLoadConfig(store) {
   store.dispatch(loadConfig());
+}
+
+export function dispatchRequestTracking(store) {
+  const state = store.getState();
+  const tracking = state.config.get('tracking');
+  if (tracking === undefined) {
+    dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Track Me', 'Don\'t Track Me'],
+    }, (index) => {
+      if (index === 0) {
+        store.dispatch(setConfigKey('tracking', true));
+      } else {
+        store.dispatch(setConfigKey('tracking', false));
+      }
+    });
+  }
 }
 
 export function initMenuHandlers(store) {
