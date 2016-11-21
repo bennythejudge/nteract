@@ -339,5 +339,6 @@ export function initMenuHandlers(store) {
   // OCD: This is more like the registration of main -> renderer thread
   ipc.on('main:load', dispatchLoad.bind(null, store));
   ipc.on('main:load-config', dispatchLoadConfig.bind(null, store));
+  ipc.on('main:request-tracking', dispatchRequestTracking.bind(null, store));
   ipc.on('main:new', dispatchNewNotebook.bind(null, store));
 }

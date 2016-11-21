@@ -41,6 +41,7 @@ export function launch(filename) {
       win.webContents.send('main:load', filename);
     }
     win.webContents.send('main:load-config');
+    win.webContents.send('main:request-tracking');
   });
 
   win.webContents.on('will-navigate', deferURL);
